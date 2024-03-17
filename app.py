@@ -1,6 +1,6 @@
-import duckdb
-import pandas as pd
 import streamlit as st
+import pandas as pd
+import duckdb
 from streamlit.errors import StreamlitAPIException
 
 st.write("Hello world")
