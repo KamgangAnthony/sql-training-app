@@ -12,11 +12,11 @@ try:
     with tab1:
         input_text = st.text_area(label = "entrez votre input")
         st.write(input_text)
-        st.dataframe(duckdb.sql(input_text).fetchdf())
+        st.dataframe(duckdb.sql(input_text).df())
 
-except StreamlitAPIException as s:
+except:
     # Continue with the code
-    st.dataframe(duckdb.sql(input_text))
+    st.dataframe(df)
 
 with tab2:
     st.header("A dog")
