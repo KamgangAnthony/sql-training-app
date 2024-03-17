@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
 import duckdb
-from streamlit.errors import StreamlitAPIException
+
+option = st.selectbox(
+    "Qu'est-ce que vous souhaitez reviser?",
+    ('Joins', 'Views', 'Aggregate functions'))
+
+st.write('Vous avez choisi de reviser: ', option)
 
 st.write("Hello world")
 data = {"a": [1,2,3], "b": [4,5,6]}
