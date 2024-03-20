@@ -19,6 +19,16 @@ chocolatine,2
 muffin,3
 '''
 
+with st.sidebar:
+    option = st.selectbox(
+        "Qu'est-ce que vous souhaitez reviser?",
+        ('Joins', 'Views', 'Aggregate functions'))
+
+    st.write('Vous avez choisi de reviser: ', option)
+
+data = {"a": [1,2,3], "b": [4,5,6]}
+df = pd.DataFrame(data)
+
 food_items = pd.read_csv(io.StringIO(csv2))
 
 answer="""
