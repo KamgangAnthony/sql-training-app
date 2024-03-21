@@ -65,8 +65,6 @@ if query:
             )
 
 
-
-
 tab2, tab3 = st.tabs(["Tables", "Solution"])
 
 with tab2:
