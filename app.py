@@ -15,7 +15,7 @@ with st.sidebar:
         "Qu'est-ce que vous souhaitez reviser?",
         ("cross_joins", "Group by", "Window functions"),
         index=None,
-        placeholder="Select a theme..."
+        placeholder="Select a theme...",
     )
 
     st.write("Vous avez choisi de reviser: ", choix)
@@ -43,11 +43,11 @@ tab2, tab3 = st.tabs(["Tables", "Solution"])
 
 with tab2:
 
-        exercise_tables = ast.literal_eval(exercise.loc[0, "tables"])
-        for table in exercise_tables:
-            st.write(f"table: {table}")
-            df_table = con.execute(f"SELECT * FROM {table}").df()
-            st.dataframe(df_table)
+    exercise_tables = ast.literal_eval(exercise.loc[0, "tables"])
+    for table in exercise_tables:
+        st.write(f"table: {table}")
+        df_table = con.execute(f"SELECT * FROM {table}").df()
+        st.dataframe(df_table)
 
 
 # if query:
