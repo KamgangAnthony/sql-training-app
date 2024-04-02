@@ -1,5 +1,3 @@
 sql-app-venv/
 .idea/
 test_db.py
-data/
-answers/
