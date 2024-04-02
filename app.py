@@ -1,10 +1,14 @@
 # pylint: disable=missing-module-docstring
+import ast
 import io
 import streamlit as st
 import pandas as pd
 import duckdb
 
 con = duckdb.connect("data/exercises_sql_tables.duckdb", read_only=False)
+
+st.header("enter your code:")
+query = st.text_area(label="votre code SQL ici", key="user_input")
 
 with st.sidebar:
     choix = st.selectbox(
@@ -15,12 +19,18 @@ with st.sidebar:
     )
 
     st.write("Vous avez choisi de reviser: ", choix)
+    print(st.write("SELECT * FROM beverages"))
 
     exercise = con.execute(f"SELECT * FROM memory_state WHERE theme = '{choix}'").df()
     st.write(exercise)
 
-data = {"a": [1, 2, 3], "b": [4, 5, 6]}
-df = pd.DataFrame(data)
+
+# data = {"a": [1, 2, 3], "b": [4, 5, 6]}
+# df = pd.DataFrame(data)
+
+if query:
+    exercise2 = con.execute(f"{query}").df()
+    st.dataframe(exercise2)
 
 # ANSWER_STR = """
 # SELECT * from beverages
@@ -29,8 +39,16 @@ df = pd.DataFrame(data)
 
 # solution_df = duckdb.sql(ANSWER_STR).df()
 
-st.header("enter your code:")
-query = st.text_area(label="votre code SQL ici", key="user_input")
+tab2, tab3 = st.tabs(["Tables", "Solution"])
+
+with tab2:
+
+        exercise_tables = ast.literal_eval(exercise.loc[0, "tables"])
+        for table in exercise_tables:
+            st.write(f"table: {table}")
+            df_table = con.execute(f"SELECT * FROM {table}").df()
+            st.dataframe(df_table)
+
 
 # if query:
 #     try:
@@ -53,15 +71,8 @@ query = st.text_area(label="votre code SQL ici", key="user_input")
 #                 f"result has a {n_lines_difference} lines difference with the solution"
 #             )
 #
-# tab2, tab3 = st.tabs(["Tables", "Solution"])
-#
-# with tab2:
-#     st.write("table: beverages")
-#     st.dataframe(beverages)
-#     st.write("table: food_items")
-#     st.dataframe(food_items)
-#     st.write("expected:")
-#     st.dataframe(solution_df)
+
+
 #
 # with tab3:
 #     st.write(ANSWER_STR)
