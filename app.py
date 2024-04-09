@@ -113,4 +113,3 @@ with tab3:
 # """
 
 # solution_df = duckdb.sql(ANSWER_STR).df()
-
