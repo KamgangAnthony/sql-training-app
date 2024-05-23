@@ -6,7 +6,7 @@ con = duckdb.connect("data/exercises_sql_tables.duckdb", read_only=False)
 
 # --------------------------------------------------
 # EXERCISES LIST
-# ---------------------------------------------------
+# --------------------------------------------------
 
 data = {
     "theme": ["cross_joins", "cross_joins"],
