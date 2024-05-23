@@ -71,3 +71,5 @@ Lewis
 
 trademark = pd.read_csv(io.StringIO(CSV4))
 con.execute("CREATE TABLE IF NOT EXISTS trademark AS SELECT * FROM trademark")
+
+con.close()
