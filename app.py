@@ -24,7 +24,7 @@ query = st.text_area(label="votre code SQL ici", key="user_input")
 with st.sidebar:
     choix = st.selectbox(
         "Qu'est-ce que vous souhaitez reviser?",
-        #["cross_joins"],
+        # ["cross_joins"],
         set(init_db.data["theme"]),
         index=None,
         placeholder="Select a theme...",
@@ -85,41 +85,54 @@ if query:
                 f"result has a {n_lines_difference} lines difference with the solution"
             )
 
-tab2, tab3 = st.tabs(["Tables", "Solution"])
+tables_tab, solutions_tab = st.tabs(["Tables", "Solution"])
 
-# if not choix:
+
+# if not user_choice:
 #     vari2 = 0
-#     while not choix:
+#     while not user_choice:
 #         if vari2 == 0:
 #             st.write("Pick an exercise bro")
 #             vari2 += 1
 
+def get_user_choice_of_exercise_display_exercises(user_choice: str) -> None:
+    """
+    Get the choice of exercise from the user and display the available exercises
+    :param user_choice: a string containing the choice of exercise from the user
+    :return: None
+    """
 
-with tab2:
-    if choix:
+    if user_choice:
         exercise_tables = exercise.loc[0, "tables"]
         for table in exercise_tables:
             st.write(f"table: {table}")
             df_table = con.execute(f"SELECT * FROM {table}").df()
             st.dataframe(df_table)
-
-    if not choix:
+    if not user_choice:
         vari2 = 0
-        while not choix:
+        while not user_choice:
             if vari2 == 0:
                 st.write("Pick an exercise bro")
                 vari2 += 1
 
-with tab3:
-    if choix:
-        st.write(answer)
 
-    if not choix:
+with tables_tab:
+    get_user_choice_of_exercise_display_exercises(choix)
+
+
+def display_solution_of_exercise(user_choice: str) -> None:
+    if user_choice:
+        st.write(answer)
+    if not user_choice:
         vari3 = 0
-        while not choix:
+        while not user_choice:
             if vari3 == 0:
                 st.write("Pick an exercise bro")
                 vari3 += 1
+
+
+with solutions_tab:
+    display_solution_of_exercise(choix)
 
 # ANSWER_STR = """
 # SELECT * from beverages
