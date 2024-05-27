@@ -5,6 +5,9 @@ import os
 import streamlit as st
 import pandas as pd
 import duckdb
+import init_db
+
+con = duckdb.connect("data/exercises_sql_tables.duckdb", read_only=False)
 
 if "data" not in os.listdir():
     print("creating folder data")
@@ -15,22 +18,22 @@ if "data" not in os.listdir():
 if "exercises_sql_tables.duckdb" not in os.listdir("data"):
     exec(open("init_db.py").read())
 
-con = duckdb.connect("data/exercises_sql_tables.duckdb", read_only=False)
-
 st.header("enter your code:")
 query = st.text_area(label="votre code SQL ici", key="user_input")
 
 with st.sidebar:
     choix = st.selectbox(
         "Qu'est-ce que vous souhaitez reviser?",
-        ("cross_joins", "Group by", "Window functions"),
+        #["cross_joins"],
+        set(init_db.data["theme"]),
         index=None,
         placeholder="Select a theme...",
     )
 
     st.write("Vous avez choisi de reviser: ", choix)
-
-    exercise = con.execute(f"SELECT * FROM memory_state WHERE theme = '{choix}'").df().sort_values("last_reviewed").reset_index(drop=True)
+    print(choix)
+    exercise = con.execute(f"SELECT * FROM memory_state WHERE theme = '{choix}'").df().sort_values(
+        "last_reviewed").reset_index(drop=True)
     st.write(exercise)
 
     if choix:
